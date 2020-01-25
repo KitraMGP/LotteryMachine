@@ -1,2 +1,7 @@
 # LotteryMachine
-A Minecraft Forge Mod
+<br>
+## 给金蛋宇宙服务器编写的抽奖Mod
+<br>
+Forge版本：28.1.116
+<br>
+Minecraft版本:1.14.4
