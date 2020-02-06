@@ -5,25 +5,14 @@ import org.apache.logging.log4j.Logger;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.zi_jing.lotterymachine.commands.CommandLotteryMachine;
-import com.zi_jing.lotterymachine.entity.EntityBox;
-import com.zi_jing.lotterymachine.entity.RenderBox;
-import com.zi_jing.lotterymachine.network.PacketLotteryMachine;
-
 import net.minecraft.command.CommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -36,31 +25,12 @@ public class LotteryMachine {
 	private static final Logger LOGGER = LogManager.getLogger();
 	
 	public LotteryMachine() {
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientInit);
-
-		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
-	}
-
-	private void preInit(final FMLCommonSetupEvent event) {
-		INSTANCE.registerMessage(0, PacketLotteryMachine.class, PacketLotteryMachine::toBytes, (buf) -> PacketLotteryMachine.fromBytes(buf), PacketLotteryMachine::handle);
-	}
-
-	// SidedProxyµ±³¡È¥ÊÀ
-	private void clientInit(final FMLClientSetupEvent event) {
-		RenderingRegistry.registerEntityRenderingHandler(EntityBox.class, new RendererFactory<EntityBox>(RenderBox.class));
-	}
-	
-	@SubscribeEvent
-	public void registerEntityTypes(RegistryEvent.Register<EntityType<? extends Entity>> event) {
-		event.getRegistry().register(EntityBox.TYPE);
 	}
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
-		// ÎÒÈÏÎªÕâ¸ömod²»ĞèÒª¹ú¼Ê»¯£¬ËùÒÔÖ±½Óhard code½øÈ¥£¨ÌÓ
-		event.getPlayer().sendStatusMessage(new StringTextComponent("¡ìa¡ìl³é½±»úÒÑÆôÓÃ¡£\n¡ìa¡ìlÊÖ³Ö½ğÁ£Ê¹ÓÃ¡ìr¡ìe¡ìl¡ìn/lotterymachine¡ìr¡ìa¡ìlÃüÁî¿ªÊ¼³é½±¡£"), false);
+		event.getPlayer().sendStatusMessage(new StringTextComponent("Â§aÂ§læŠ½å¥–æœºå·²å¯ç”¨ï¼ŒÂ§aÂ§lè¾“å…¥å‘½ä»¤/lotterymachineå¼€å§‹æŠ½å¥–ã€‚\nÂ§cÂ§læ³¨æ„ï¼šä½¿ç”¨è¯¥å‘½ä»¤æ—¶ï¼Œå‡†å¿ƒä¸èƒ½æŒ‡å‘ç©ºä¸­æˆ–å¢™ä¸Šï¼Œåªèƒ½æŒ‡å‘åœ°é¢ã€‚"), false);
 	}
 
 	@SubscribeEvent
