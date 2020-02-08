@@ -161,8 +161,8 @@ public class CommandLotteryMachine {
 	private static void broadcast(ServerPlayerEntity player, int lvl) {
 		String s = "";
 		switch(lvl) {
-		case 1: s = "§a§l" +player.getName().getString() + "刚刚抽到了[稀有]物品！";
-		case 2: s = "§9§l" +player.getName().getString() + "刚刚抽到了[传奇]物品！";
+		case 1: s = "§a§l" +player.getName().getString() + "刚刚抽到了[稀有]物品！"; break;
+		case 2: s = "§9§l" +player.getName().getString() + "刚刚抽到了[传奇]物品！"; break;
 		}
 		for(ServerPlayerEntity player_ : player.server.getPlayerList().getPlayers()) {
 			player_.sendStatusMessage(new StringTextComponent(s), false);
